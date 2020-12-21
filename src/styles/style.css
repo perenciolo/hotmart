@@ -1,0 +1,9 @@
+html,
+body,
+#__next {
+  @apply h-full;
+}
+
+.main__column {
+  max-width: 220px;
+}

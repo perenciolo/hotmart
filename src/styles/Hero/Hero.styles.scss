@@ -1,0 +1,12 @@
+.hero {
+  &__item {
+    min-width: 135px;
+    max-width: 135px;
+    text-align: right;
+  }
+  &__box {
+    &:not(:first-of-type) {
+      margin-top: 6px;
+    }
+  }
+}
