@@ -22,3 +22,28 @@ export type AccountabilityExtraInfo = {
   eventDate: Date | null;
   requestedCurrency: string | null;
 };
+
+export type Currency = {
+  id: number;
+  name: string;
+  code: string;
+  symbol: string;
+};
+
+export type SidebarContent = {
+  accountabilityId: number;
+  accountabilityStatus: 'OPEN' | 'CLOSED' | 'FINISHED';
+  currency: Currency;
+  declared: number;
+  approved: number;
+  received: number;
+  returned: number;
+  balance: number;
+  updatedOn: Date;
+};
+
+export type Sort = {
+  sorted: boolean;
+  unsorted: boolean;
+  empty: boolean;
+};
