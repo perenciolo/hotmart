@@ -35,13 +35,13 @@ function Hero({
   }, [createdOn]);
 
   return (
-    <div className="bg-gradient-to-r from-custom-light-blue to-custom-blue text-white flex flex-col rounded-xl">
-      <h2 className="text-xl font-bold ml-12 mb-5 mt-6">
+    <div className="flex flex-wrap overflow-hidden bg-gradient-to-r from-custom-light-blue to-custom-blue text-white rounded-xl">
+      <h2 className="w-full overflow-hidden text-xl font-bold ml-12 mb-5 mt-6">
         Reembolso -
         {`# ${id} ${name}`}
       </h2>
-      <div className="flex items-center">
-        <div className="mb-4 border-r-2 border-white border-opacity-25 w-8/12">
+      <div className="w-full overflow-hidden md:w-8/12">
+        <div className="mb-4 border-r-2 border-white border-opacity-25">
           <div className="flex text-sm hero__box">
             <div className="flex justify-end mr-8 pl-12 hero__item">Nome</div>
             <div className="flex max-w-xs font-bold">{collaborator.name}</div>
@@ -89,24 +89,27 @@ function Hero({
             </div>
           </div>
         </div>
-        <div className="mb-4 border-r-2 border-white border-opacity-25 w-4/12">
-          <div className="flex flex-col items-start text-sm hero__box">
-            <div className="flex w-8/12 mx-auto">Atribuir analista</div>
-            <div className="flex w-8/12 font-bold mx-auto text-grey-500">
-              <input type="text" className="rounded-md px-2 py-1 text-gray-500 max-w-100" placeholder="Atribuir analista" />
-            </div>
-          </div>
-          <div className="flex flex-col items-start text-sm hero__box">
-            <div className="flex w-8/12 mx-auto">Centro de Custo</div>
-            {costCenterNames.map((costCenterName, i) => (
-              <div key={`${i}`} className="flex w-8/12 font-bold mx-auto">
-                {costCenterName}
-              </div>
-            ))}
+      </div>
+
+      <div className="w-full overflow-hidden md:w-4/12">
+        <div className="flex flex-col items-start text-sm hero__box">
+          <div className="flex w-8/12 mx-auto">Atribuir analista</div>
+          <div className="flex w-8/12 font-bold mx-auto text-grey-500">
+            <input type="text" className="rounded-md px-2 py-1 text-gray-500 max-w-100" placeholder="Atribuir analista" />
           </div>
         </div>
+        <div className="flex flex-col items-start text-sm hero__box">
+          <div className="flex w-8/12 mx-auto">Centro de Custo</div>
+          {costCenterNames.map((costCenterName, i) => (
+            <div key={`${i}`} className="flex w-8/12 font-bold mx-auto">
+              {costCenterName}
+            </div>
+          ))}
+        </div>
       </div>
+
     </div>
+
   );
 }
 

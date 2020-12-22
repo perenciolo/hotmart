@@ -14,6 +14,7 @@ module.exports = {
         'custom-light-blue':'#00d7ce',
         'custom-blue':'#00c5fc',
         'success-100':'#edfff5',
+        'success-400':'#4acc82',
         'success-500':'#009d43',
       },
     },

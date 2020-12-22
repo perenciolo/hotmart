@@ -2,6 +2,7 @@ import React from 'react';
 
 import Breadcrumb from '../components/Breadcrumb/Breadcrumb';
 import Hero from '../components/Hero/Hero';
+import MoneyCard from '../components/MoneyCard/MoneyCard';
 import StatusCard from '../components/StatusCard/StatusCard';
 import { Meta } from '../layout/Meta';
 import { Main } from '../templates/Main';
@@ -66,33 +67,49 @@ const Index = ({
   sidebar: { content },
 }: IIndexProps) => (
   <Main meta={<Meta title={Config.title} description={Config.description} />}>
-    <div className="main__column w-3/12" />
-    <div className="w-full bg-gray-100 mt-12">
-      <Breadcrumb />
-      <div className="flex h-full">
-        <div className="w-8/12">
-          <div className="ml-8">
-            <Hero
-              id={id}
-              name={title}
-              collaborator={collaborator}
-              justification={justification}
-              purpose={purpose}
-              project={project.title}
-              amountOfPeople={accountabilityExtraInfo.amountOfPeople}
-              budgetForBreakfast={accountabilityExtraInfo.budgetForBreakfast ?? false}
-              costCenterNames={costCenters.map((costCenter) => costCenter.name)}
-              createdOn={createdOn}
-            />
+    <div className="flex w-full flex-wrap overflow-hidden">
+
+      <div className="w-full overflow-hidden md:w-1/12" />
+
+      <div className="w-full overflow-hidden md:w-11/12 bg-white">
+        <Breadcrumb />
+        <div className="flex flex-wrap overflow-hidden md:-mx-2">
+
+          <div className="w-full overflow-hidden md:my-2 md:px-2 md:w-8/12">
+            <div className="px-4 md:pl-8 md:pr-2">
+              <Hero
+                id={id}
+                name={title}
+                collaborator={collaborator}
+                justification={justification}
+                purpose={purpose}
+                project={project.title}
+                amountOfPeople={accountabilityExtraInfo.amountOfPeople}
+                budgetForBreakfast={accountabilityExtraInfo.budgetForBreakfast ?? false}
+                costCenterNames={costCenters.map((costCenter) => costCenter.name)}
+                createdOn={createdOn}
+              />
+            </div>
           </div>
-        </div>
-        <div className="w-4/12 flex items-strech">
-          <div className="ml-16 bg-white p-8 w-full">
-            <StatusCard />
+
+          <div className="w-full overflow-hidden md:my-2 md:px-2 md:w-4/12">
+            <div className="px-4">
+              {content.map((item) => (
+                <React.Fragment key={item.accountabilityId + item.declared}>
+                  <StatusCard status={item.accountabilityStatus} />
+                  <div className="my-4">
+                    <MoneyCard content={item} />
+                  </div>
+                </React.Fragment>
+              ))}
+            </div>
           </div>
+
         </div>
       </div>
+
     </div>
+
   </Main>
 );
 

@@ -6,7 +6,7 @@ type IMainProps = {
 };
 
 const Main = ({ meta, children }: IMainProps) => (
-  <div className="antialiased w-full h-full flex bg-navy">
+  <div className="antialiased w-full flex bg-navy">
     {meta}
 
     {children}
