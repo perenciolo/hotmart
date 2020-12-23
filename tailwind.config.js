@@ -19,6 +19,7 @@ module.exports = {
         'tealish-green': '#0fc75e',
         'nice-blue': '#0f68bd',
         'pale-blue': '#e7f2fd',
+        offwhite: 'fafbfc',
       },
     },
   },

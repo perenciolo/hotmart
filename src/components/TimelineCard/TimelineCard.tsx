@@ -62,7 +62,7 @@ function TimelineCard({
   }, [cardType]);
 
   return (
-    <div className="flex items-center flex-wrap overflow-hidden rounded-xl bg-white my-6 p-4">
+    <div className="flex items-center flex-wrap overflow-hidden rounded-xl bg-white my-6 p-4 shadow-md">
       <div className="w-full overflow-hidden sm:w-full md:w-full lg:w-1/5">
         <div className="w-16 h-16 flex items-center justify-center">
           <div

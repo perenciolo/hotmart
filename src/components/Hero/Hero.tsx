@@ -35,7 +35,7 @@ function Hero({
   }, [createdOn]);
 
   return (
-    <div className="flex flex-wrap overflow-hidden bg-gradient-to-r from-custom-light-blue to-custom-blue text-white rounded-xl">
+    <div className="flex flex-wrap overflow-hidden bg-gradient-to-r from-custom-light-blue to-custom-blue text-white rounded-xl shadow-md">
       <h2 className="w-full overflow-hidden text-xl font-bold ml-12 mb-5 mt-6">
         Reembolso -
         {`# ${id} ${name}`}
@@ -100,8 +100,8 @@ function Hero({
         </div>
         <div className="flex flex-col items-start text-sm hero__box">
           <div className="flex w-8/12 mx-auto">Centro de Custo</div>
-          {costCenterNames.map((costCenterName, i) => (
-            <div key={`${i}`} className="flex w-8/12 font-bold mx-auto">
+          {costCenterNames.map((costCenterName) => (
+            <div key={`${costCenterName}-${Math.random().toFixed(3)}`} className="flex w-8/12 font-bold mx-auto">
               {costCenterName}
             </div>
           ))}

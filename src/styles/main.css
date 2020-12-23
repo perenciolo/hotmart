@@ -20,3 +20,9 @@ a:hover {
 .content ul {
   @apply my-6;
 }
+
+.custom__center{
+  top: 50%;
+  right: 5%;
+  transform: translateY(-50%);
+}

@@ -1,7 +1,7 @@
 import React, { useMemo } from 'react';
 
 interface StatusCardProps {
-  status: 'OPEN'|'CLOSED'|'FINISHED'
+  status: 'OPEN'|'PENDING'|'FINISHED'
 }
 
 function StatusCard(
@@ -9,10 +9,12 @@ function StatusCard(
 ) {
   const statusTxt = useMemo(() => {
     if (status === 'OPEN') return 'Aberto';
+    if (status === 'PENDING') return 'Em preenchimento';
+
     return 'Finalizado';
   }, [status]);
   return (
-    <div className="rounded-md bg-success-100 text-success-500 border-2 border-success-500 p-2 flex flex-col items-center">
+    <div className={`rounded-md bg-${status === 'OPEN' ? 'success-100' : 'hotgray-dark'} text-${status === 'OPEN' ? 'success-500' : 'navy'} border-2 border-${status === 'OPEN' ? 'success-500' : 'navy'} p-2 flex flex-col items-center`}>
       <p className="text-base">
         Status
       </p>

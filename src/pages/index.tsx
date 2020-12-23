@@ -1,5 +1,7 @@
 import React from 'react';
 
+import Link from 'next/link';
+
 import Breadcrumb from '../components/Breadcrumb/Breadcrumb';
 import Hero from '../components/Hero/Hero';
 import MoneyCard from '../components/MoneyCard/MoneyCard';
@@ -94,6 +96,18 @@ const Index = ({
                 createdOn={createdOn}
               />
 
+              <Link href="/add">
+                <a className="rounded-md bg-pale-blue text-nice-blue border-2 border-nice-blue p-2 flex justify-center md:w-2/6 mt-6 ml-auto">
+                  <p className="text-base">
+                    <span className="inline-block pr-2">
+                      <i className="fa fa-receipt" />
+                      {' '}
+                    </span>
+                    Adicionar despesa
+                  </p>
+                </a>
+              </Link>
+
               {timelineContent?.map((timelineItem) => (
                 <div key={`${timelineItem.expenseId}-${timelineItem.id}`}>
                   <TimelineCard content={timelineItem} />
@@ -102,8 +116,8 @@ const Index = ({
             </div>
           </div>
 
-          <div className="w-full overflow-hidden md:my-2 md:px-2 md:w-4/12">
-            <div className="px-4">
+          <div className="w-full overflow-hidden md:my-2 md:px-2 md:w-4/12 bg-white shadow-md">
+            <div className="pt-8 pb-4 px-4">
               {content.map((item) => (
                 <React.Fragment key={item.accountabilityId + item.declared}>
                   <StatusCard status={item.accountabilityStatus} />

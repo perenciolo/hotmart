@@ -32,7 +32,7 @@ export type Currency = {
 
 export type SidebarContent = {
   accountabilityId: number;
-  accountabilityStatus: 'OPEN' | 'CLOSED' | 'FINISHED';
+  accountabilityStatus: 'OPEN' | 'FINISHED' | 'PENDING';
   currency: Currency;
   declared: number;
   approved: number;
