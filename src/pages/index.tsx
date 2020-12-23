@@ -4,6 +4,7 @@ import Breadcrumb from '../components/Breadcrumb/Breadcrumb';
 import Hero from '../components/Hero/Hero';
 import MoneyCard from '../components/MoneyCard/MoneyCard';
 import StatusCard from '../components/StatusCard/StatusCard';
+import TimelineCard from '../components/TimelineCard/TimelineCard';
 import { Meta } from '../layout/Meta';
 import { Main } from '../templates/Main';
 import {
@@ -12,6 +13,7 @@ import {
   Person,
   SidebarContent,
   Sort,
+  TimelineItem,
 } from '../types/default.types';
 import { Config } from '../utils/Config';
 
@@ -50,6 +52,9 @@ interface IIndexProps {
     number: number;
     empty: boolean;
   };
+  timeline: {
+    content: TimelineItem[];
+  };
 }
 
 const Index = ({
@@ -65,16 +70,15 @@ const Index = ({
     accountabilityExtraInfo,
   },
   sidebar: { content },
+  timeline: { content: timelineContent },
 }: IIndexProps) => (
   <Main meta={<Meta title={Config.title} description={Config.description} />}>
     <div className="flex w-full flex-wrap overflow-hidden">
-
       <div className="w-full overflow-hidden md:w-1/12" />
 
-      <div className="w-full overflow-hidden md:w-11/12 bg-white">
+      <div className="w-full overflow-hidden md:w-11/12 bg-hotgray">
         <Breadcrumb />
         <div className="flex flex-wrap overflow-hidden md:-mx-2">
-
           <div className="w-full overflow-hidden md:my-2 md:px-2 md:w-8/12">
             <div className="px-4 md:pl-8 md:pr-2">
               <Hero
@@ -89,6 +93,12 @@ const Index = ({
                 costCenterNames={costCenters.map((costCenter) => costCenter.name)}
                 createdOn={createdOn}
               />
+
+              {timelineContent?.map((timelineItem) => (
+                <div key={`${timelineItem.expenseId}-${timelineItem.id}`}>
+                  <TimelineCard content={timelineItem} />
+                </div>
+              ))}
             </div>
           </div>
 
@@ -104,12 +114,9 @@ const Index = ({
               ))}
             </div>
           </div>
-
         </div>
       </div>
-
     </div>
-
   </Main>
 );
 
@@ -118,10 +125,13 @@ export async function getStaticProps(): Promise<{ props: IIndexProps }> {
 
   const sidebar = await fetch('https://api-front-end-challenge.buildstaging.com/api/sidebar');
 
+  const timeline = await fetch('https://api-front-end-challenge.buildstaging.com/api/timeline');
+
   return {
     props: {
       header: await header.json(),
       sidebar: await sidebar.json(),
+      timeline: await timeline.json(),
     },
   };
 }

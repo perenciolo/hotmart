@@ -47,3 +47,25 @@ export type Sort = {
   unsorted: boolean;
   empty: boolean;
 };
+
+export type TimelineItem = {
+  id: number,
+  cardDate: 1585710000000,
+  cardType: 'EXPENSE'|'EVALUATION'|'ACCOUNTABILITY_SUBMITTED'|'ACCOUNTABILITY_CREATED'
+  expenseId: number
+  invoiceDate: Date|null
+  expenseTypeId: number
+  expenseTypeCode: string
+  expenseTypeIcon: string
+  currencyId: number,
+  currencyCode: string,
+  currencySymbol: string,
+  resourceUrl: string
+  contentType: string
+  amountSpent: number
+  amountTotal: number
+  notes: string
+  status: 'PENDING'|'APPROVED'|'OPEN'
+  updatedOn: Date|null
+  expenseEvaluation: null
+};
