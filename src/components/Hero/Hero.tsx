@@ -44,11 +44,11 @@ function Hero({
         <div className="mb-4 border-r-2 border-white border-opacity-25">
           <div className="flex text-sm hero__box">
             <div className="flex justify-end mr-8 pl-12 hero__item">Nome</div>
-            <div className="flex max-w-xs font-bold">{collaborator.name}</div>
+            <div className="flex max-w-xs font-bold">{collaborator?.name}</div>
           </div>
           <div className="flex text-sm hero__box">
             <div className="flex justify-end mr-8 pl-12 hero__item">Email</div>
-            <div className="flex max-w-xs font-bold">{collaborator.email}</div>
+            <div className="flex max-w-xs font-bold">{collaborator?.email}</div>
           </div>
           <div className="flex text-sm hero__box">
             <div className="flex justify-end mr-8 pl-12 hero__item">Justificativa</div>

@@ -1,26 +1,74 @@
+/* eslint-disable no-alert */
 /* eslint-disable jsx-a11y/label-has-associated-control */
 
-import React, { useState } from 'react';
+import React, { useCallback, useState } from 'react';
+
+import { useRouter } from 'next/router';
 
 import Breadcrumb from '../components/Breadcrumb/Breadcrumb';
 import { DatePicker } from '../components/Datepicker/Datepicker';
 import FileInput from '../components/FileInput/FileInput';
+import Hero from '../components/Hero/Hero';
 import StatusCard from '../components/StatusCard/StatusCard';
+import { useAppCtx } from '../context/AppContext';
 import { Meta } from '../layout/Meta';
 import { Main } from '../templates/Main';
+import { TimelineItem } from '../types/default.types';
 import { Config } from '../utils/Config';
 
-interface AddProps {}
-
 function Add() {
-  // {}:AddProps
-  const [expenseTypeCode, setExpenseTypeCode] = useState<'hotel-fee'| 'food' |'transport'|''>('');
-  const [currencyCode, setCurrencyCode] = useState<'BRL'|'USD' |'MXN'|''>('');
+  const {
+    header: {
+      id,
+      title,
+      collaborator,
+      justification,
+      purpose,
+      costCenters,
+      project,
+      createdOn,
+      accountabilityExtraInfo,
+    },
+    setTimelineItem,
+  } = useAppCtx();
+  const router = useRouter();
+
+  const [expenseTypeCode, setExpenseTypeCode] = useState<'hotel-fee' | 'food' | 'transport' | ''>(
+    '',
+  );
+  const [currencyCode, setCurrencyCode] = useState<'BRL' | 'USD' | 'MXN' | ''>('');
   const [amountSpent, setAmountSpent] = useState<string>('');
   const [amountTotal, setAmountTotal] = useState<string>('');
   const [notes, setNotes] = useState<string>('');
   const [resourceUrl, setResourceUrl] = useState<string>('');
-  const [cardDate, setCardDate] = useState<Date|null>(null);
+  const [cardDate, setCardDate] = useState<Date | null>(null);
+
+  const handleSubmit = useCallback(async (e) => {
+    e.preventDefault();
+
+    const payload = {
+      expenseTypeCode,
+      currencyCode,
+      amountSpent,
+      amountTotal,
+      notes,
+      resourceUrl,
+      cardDate: cardDate && new Date(cardDate).getTime(),
+    };
+    try {
+      const data: TimelineItem = await fetch(
+        'https://api-front-end-challenge.buildstaging.com/api/expense/add',
+        {
+          method: 'post',
+          body: JSON.stringify(payload),
+        },
+      ).then((response) => response.json());
+      setTimelineItem(data);
+      alert('Success, your expense was saved successfully');
+    } catch (error) {
+      alert('Error, please verify the data');
+    }
+  }, []);
 
   return (
     <Main meta={<Meta title={Config.title} description={Config.description} />}>
@@ -32,37 +80,31 @@ function Add() {
           <div className="flex flex-wrap md:h-full overflow-hidden md:-mx-2">
             <div className="w-full overflow-hidden md:my-2 md:px-2 md:w-8/12">
               <div className="px-4 md:pl-8 md:pr-2">
+                <Hero
+                  id={id}
+                  name={title}
+                  collaborator={collaborator}
+                  justification={justification}
+                  purpose={purpose}
+                  project={project.title}
+                  amountOfPeople={accountabilityExtraInfo.amountOfPeople}
+                  budgetForBreakfast={accountabilityExtraInfo.budgetForBreakfast ?? false}
+                  costCenterNames={costCenters.map((costCenter) => costCenter.name)}
+                  createdOn={createdOn}
+                />
                 <form
-                  onSubmit={async (e) => {
-                    e.preventDefault();
-
-                    const payload = {
-                      expenseTypeCode,
-                      currencyCode,
-                      amountSpent,
-                      amountTotal,
-                      notes,
-                      resourceUrl,
-                      cardDate: cardDate && new Date(cardDate).getTime(),
-                    };
-                    try {
-                      const data = await fetch('https://api-front-end-challenge.buildstaging.com/api/expense/add', {
-                        method: 'post',
-                        body: JSON.stringify(payload),
-                      }).then((response) => response.json());
-                      console.log(data);
-                      alert('Success, your expense was saved successfully');
-                    } catch (error) {
-                      alert('Error, please verify the data');
-                    }
-                  }}
+                  onSubmit={handleSubmit}
                   className="bg-white shadow-md rounded-md px-8 pt-6 pb-8 mb-4 flex flex-col my-2"
                 >
                   <div className="flex flex-wrap overflow-hidden">
                     <div className="w-full overflow-hidden sm:w-full md:w-1/2">
                       <p className="text-gray-700 font-bold">Recibo, cupom ou nota fiscal*</p>
                       <div className="mt-2 md:mr-4 mb-4 md:mb-0">
-                        <FileInput name="resourceUrl" value={resourceUrl} onChange={(e) => setResourceUrl(e.target.value)} />
+                        <FileInput
+                          name="resourceUrl"
+                          value={resourceUrl}
+                          onChange={(e) => setResourceUrl(e.target.value)}
+                        />
                       </div>
                     </div>
 
@@ -81,7 +123,9 @@ function Add() {
                               id="type-select"
                               name="expenseTypeCode"
                               value={expenseTypeCode}
-                              onChange={(e) => setExpenseTypeCode(e.target.value as '' | 'hotel-fee' | 'food' | 'transport')}
+                              onChange={(e) => setExpenseTypeCode(
+                                e.target.value as '' | 'hotel-fee' | 'food' | 'transport',
+                              )}
                             >
                               <option>Selecione</option>
                               <option value="hotel-fee">Hotel</option>
@@ -201,6 +245,7 @@ function Add() {
                         <button
                           className="border-slate-grey text-slate-grey border-2 font-bold py-2 px-4 rounded ml-auto md:w-2/6"
                           type="button"
+                          onClick={() => router.push('/')}
                         >
                           Cancelar
                         </button>
